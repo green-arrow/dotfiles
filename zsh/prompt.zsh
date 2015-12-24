@@ -37,12 +37,14 @@ unpushed () {
   $git cherry -v @{upstream} 2>/dev/null
 }
 
-commit_diff () {
+branch_info () {
   branch=$(git_branch)
   rev_list=$($git rev-list --count --left-right $branch...origin/$branch)
   commits_ahead=$(echo $rev_list | awk {'print $1'})
   commits_behind=$(echo $rev_list | awk {'print $2'})
-  echo "(↑$commits_ahead ↓$commits_behind)"
+  num_staged=$($git diff --cached --numstat | wc -l | awk {'print $1'})
+  num_uncommited=$($git status --porcelain 2>/dev/null| egrep "^(M| M)" | wc -l | awk {'print $1'})
+  echo "(↑$commits_ahead ↓$commits_behind | ●$num_staged ✚$num_uncommited)"
 }
 
 need_push () {
@@ -79,7 +81,7 @@ directory_name() {
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)$(commit_diff)\n› '
+export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)$(branch_info)\n› '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
 }
