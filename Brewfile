@@ -45,8 +45,11 @@ brew 'nvm'
 brew 'watchman'
 
 # Cask installations
+cask 'dash'
+cask 'dashlane'
+cask 'divvy'
 cask 'firefox'
 cask 'google-chrome'
-cask 'slack'
 cask 'iterm2'
+cask 'slack'
 cask 'sublime-text3'
