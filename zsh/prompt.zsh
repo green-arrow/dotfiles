@@ -37,6 +37,14 @@ unpushed () {
   $git cherry -v @{upstream} 2>/dev/null
 }
 
+commit_diff () {
+  branch=$(git_branch)
+  rev_list=$($git rev-list --count --left-right $branch...origin/$branch)
+  commits_ahead=$(echo $rev_list | awk {'print $1'})
+  commits_behind=$(echo $rev_list | awk {'print $2'})
+  echo "(↑$commits_ahead ↓$commits_behind)"
+}
+
 need_push () {
   if [[ $(unpushed) == "" ]]
   then
@@ -71,7 +79,7 @@ directory_name() {
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)\n› '
+export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)$(commit_diff)\n› '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
 }

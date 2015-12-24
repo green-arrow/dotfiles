@@ -1,7 +1,6 @@
 # Load Antigen
 source $ZSH/zsh/antigen/antigen.zsh
 
-echo "Loading antigen stuffs"
 # Use oh-my-zsh - MUST come before all bundles
 antigen use oh-my-zsh
 
