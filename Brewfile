@@ -1,38 +1,52 @@
 cask_args appdir: '/Applications'
 
 tap 'caskroom/cask'
+tap 'caskroom/versions'
 tap 'homebrew/bundle'
 
-brew 'ack'
+
+# Install GNU core utilities (those that come with OS X are outdated).
+# Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
 brew 'coreutils'
-brew 'go'
+
+# Install some other useful utilities like `sponge`.
+brew 'moreutils'
+
+# Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
+brew 'findutils'
+
+# Install GNU `sed`, overwriting the built-in `sed`.
+brew 'gnu-sed', args: ['with-default-names']
+
+# Install `wget` with IRI support.
+brew 'wget', args: ['with-iri']
+
+# Install more recent versions of some OS X tools.
+brew 'vim', args: ['override-system-vi']
+brew 'homebrew/dupes/grep'
+brew 'homebrew/dupes/openssh'
+brew 'homebrew/dupes/screen'
+brew 'ack'
+brew 'lynx'
+brew 'p7zip'
+brew 'pv'
+brew 'rename'
+brew 'tree'
+
+# Libraries
 brew 'grc'
-brew 'imagemagick'
 brew 'jp2a'
-brew 'libcaca', args: ['with-imlib2']
 brew 'libgit2'
 brew 'openssl'
-brew 'node'
 brew 'readline'
-brew 'postgresql'
-brew 'ruby-build'
-brew 'rbenv'
-brew 'roundup'
-brew 'spark'
-brew 'unrar'
-brew 'youtube-dl'
 
-cask '1password'
-cask 'adium'
-cask 'atom'
+# Development
+brew 'nvm'
+brew 'watchman'
+
+# Cask installations
 cask 'firefox'
-cask 'garmin-express'
 cask 'google-chrome'
-cask 'handbrake'
-cask 'mapbox-studio'
-cask 'seashore'
 cask 'slack'
-cask 'steam'
-cask 'transmission'
-cask 'tunnelbear'
-cask 'vlc'
+cask 'iterm2'
+cask 'sublime-text3'

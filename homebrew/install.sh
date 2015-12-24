@@ -18,7 +18,8 @@ then
   then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
   fi
-
+else
+  echo "  Homebrew is already installed!"
 fi
 
 exit 0
