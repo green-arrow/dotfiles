@@ -41,7 +41,6 @@ brew 'openssl'
 brew 'readline'
 
 # Development
-brew 'nvm'
 brew 'watchman'
 
 # Cask installations

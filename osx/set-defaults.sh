@@ -5,6 +5,11 @@
 # * https://github.com/zhimsel/dotfiles
 # * https://github.com/holman/dotfiles
 
+# Load convenience output functions
+. $ZSH/lib/output.sh
+
+info 'Writing sensible defaults for OSX'
+
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
