@@ -9,6 +9,12 @@ else
   git="/usr/bin/git"
 fi
 
+is_git_repo() {
+  local is_repo=false
+  $git status -s &> /dev/null && is_repo=true
+  echo "$is_repo"
+}
+
 git_branch() {
   echo $($git symbolic-ref HEAD 2>/dev/null | awk '{sub(/refs\/heads\//,""); print}')
 }
@@ -38,13 +44,16 @@ unpushed () {
 }
 
 branch_info () {
-  branch=$(git_branch)
-  rev_list=$($git rev-list --count --left-right $branch...origin/$branch)
-  commits_ahead=$(echo $rev_list | awk {'print $1'})
-  commits_behind=$(echo $rev_list | awk {'print $2'})
-  num_staged=$($git diff --cached --numstat | wc -l | awk {'print $1'})
-  num_uncommited=$($git status --porcelain 2>/dev/null| egrep "^(M| M)" | wc -l | awk {'print $1'})
-  echo "(↑$commits_ahead ↓$commits_behind | ●$num_staged ✚$num_uncommited)"
+  if $(is_git_repo)
+  then
+    branch=$(git_branch)
+    rev_list=$($git rev-list --count --left-right $branch...origin/$branch)
+    commits_ahead=$(echo $rev_list | awk {'print $1'})
+    commits_behind=$(echo $rev_list | awk {'print $2'})
+    num_staged=$($git diff --cached --numstat | wc -l | awk {'print $1'})
+    num_uncommited=$($git status --porcelain 2>/dev/null| egrep "^(M| M)" | wc -l | awk {'print $1'})
+    echo "(↑$commits_ahead ↓$commits_behind | ●$num_staged ✚$num_uncommited)"
+  fi
 }
 
 need_push () {
