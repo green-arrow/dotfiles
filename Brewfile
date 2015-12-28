@@ -44,7 +44,6 @@ brew 'readline'
 brew 'watchman'
 
 # Cask installations
-cask 'dash'
 cask 'dashlane'
 cask 'divvy'
 cask 'firefox'
