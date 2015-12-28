@@ -45,7 +45,6 @@ brew 'watchman'
 
 # Cask installations
 cask 'dashlane'
-cask 'divvy'
 cask 'firefox'
 cask 'google-chrome'
 cask 'iterm2'
