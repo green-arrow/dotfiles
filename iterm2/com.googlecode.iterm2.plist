@@ -2116,7 +2116,7 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame Preferences</key>
-	<string>213 252 924 485 0 0 1920 1177 </string>
+	<string>7 318 924 485 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>8 666 675 502 0 0 1920 1177 </string>
 	<key>NeverWarnAboutShortLivedSessions_66AE0692-B373-4534-98D6-77DE2AD4E240</key>
@@ -2513,7 +2513,7 @@
 					<key>Text</key>
 					<string>[1;6D</string>
 				</dict>
-				<key>0xf702-0x280000</key>
+				<key>0xf702-0x380000</key>
 				<dict>
 					<key>Action</key>
 					<integer>11</integer>
@@ -2541,7 +2541,7 @@
 					<key>Text</key>
 					<string>[1;6C</string>
 				</dict>
-				<key>0xf703-0x280000</key>
+				<key>0xf703-0x380000</key>
 				<dict>
 					<key>Action</key>
 					<integer>11</integer>
