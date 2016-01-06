@@ -9,6 +9,8 @@ set -e
 
 echo ''
 
+export ZSH=$HOME/.dotfiles
+
 # Load convenience output functions
 . $ZSH/lib/output.sh
 

@@ -42,11 +42,3 @@ brew 'readline'
 
 # Development
 brew 'watchman'
-
-# Cask installations
-cask 'dashlane'
-cask 'firefox'
-cask 'google-chrome'
-cask 'iterm2'
-cask 'slack'
-cask 'sublime-text3'
