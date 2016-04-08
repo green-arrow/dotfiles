@@ -1,5 +1,5 @@
-# shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
+# shortcut to this dotfiles path is $DOTFILES_ROOT
+export DOTFILES_ROOT=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Developer/workspace
@@ -12,36 +12,30 @@ then
   source ~/.localrc
 fi
 
-# all of our zsh files
-typeset -U config_files
-config_files=($ZSH/**/*.zsh)
-
 # load the path files
-for file in ${(M)config_files:#*/path.zsh}
+for file in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'path.zsh')
 do
   source $file
 done
 
 # load everything but the path and completion and ls_aliases
-for file in ${${config_files:#*/(path|completion|ls_aliases).zsh}}
+for file in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.zsh' -not -name 'path.zsh' -not -name 'completion.zsh' -not -name 'ls_aliases.zsh')
 do
   source $file
 done
 
 # load ls_aliases (this MUST be done AFTER antigen to prevent console errors due to an issue with an ls arg)
-for file in ${(M)config_files:#*/ls_aliases.zsh}
-do
-  source $file
-done
+source "$DOTFILES_ROOT/system/ls_aliases.zsh"
 
 # initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
+autoload -U compinit && compinit
 
 # load every completion after autocomplete loads
-for file in ${(M)config_files:#*/completion.zsh}
+for file in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'completion.zsh')
 do
   source $file
 done
 
 unset config_files
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

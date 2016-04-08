@@ -18,3 +18,13 @@ Thumbs.db
 # Package Manager *
 node_modules
 bower_components
+
+# EMACS #
+.projectile
+
+# Sublime #
+*.sublime-*
+
+# TERN #
+.tern-project
+.tern-port

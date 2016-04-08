@@ -6,7 +6,7 @@
 # as well as some basic NPM packages used for front-end development
 
 # Load convenience output functions
-. $ZSH/lib/output.sh
+. $DOTFILES_ROOT/lib/output.sh
 
 NVM_DIR="$HOME/.nvm"
 
@@ -16,7 +16,7 @@ then
   info 'Installing NVM'
 
   # Link and activate NVM
-  ln -s $ZSH/node/nvm $NVM_DIR && . $NVM_DIR/nvm.sh
+  ln -s $DOTFILES_ROOT/node/nvm $NVM_DIR && . $NVM_DIR/nvm.sh
 else
   info 'NVM is already installed! (version $(nvm --version))'
 fi

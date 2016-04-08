@@ -6,7 +6,7 @@
 # using Homebrew.
 
 # Load convenience output functions
-. $ZSH/lib/output.sh
+. $DOTFILES_ROOT/lib/output.sh
 
 # Check for Homebrew
 if test ! $(which brew)

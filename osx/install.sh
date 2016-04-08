@@ -4,7 +4,7 @@
 # yeah, let's do that.
 
 # Load convenience output functions
-. $ZSH/lib/output.sh
+. $DOTFILES_ROOT/lib/output.sh
 
 info 'Updating apps / installables from the Mac App Store (sudo softwareupdate -i -a)'
 sudo softwareupdate -i -a

@@ -39,6 +39,8 @@ brew 'jp2a'
 brew 'libgit2'
 brew 'openssl'
 brew 'readline'
+brew 'fzf'
+brew 'the_silver_searcher'
 
 # Development
 brew 'watchman'

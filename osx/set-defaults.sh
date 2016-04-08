@@ -6,7 +6,7 @@
 # * https://github.com/holman/dotfiles
 
 # Load convenience output functions
-. $ZSH/lib/output.sh
+. $DOTFILES_ROOT/lib/output.sh
 
 info 'Writing sensible defaults for OSX'
 
@@ -299,3 +299,10 @@ defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool t
 
 # Use AirDrop over every interface. srsly this should be a default.
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
+
+###############################################################################
+# Sublime                                                                     #
+###############################################################################
+
+# Make keys repeat when holding down in sublime text 3
+defaults write com.sublimetext.3 ApplePressAndHoldEnabled -bool false

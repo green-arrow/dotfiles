@@ -1,4 +1,73 @@
-syntax on
 
 " Wrap gitcommit file types at the appropriate length
 filetype indent plugin on
+execute pathogen#infect()
+call pathogen#helptags()
+set omnifunc=syntaxcomplete#Complete
+
+" ********** UI
+
+" Color scheme
+syntax on
+colorscheme zenburn
+set guifont=Source\ Code\ Pro:h12
+set colorcolumn=80
+set number
+
+" Make panes open to right and below instead of left and above
+:set splitright
+:set splitbelow
+
+"" ********** SMART DEFAULTS
+let mapleader=" "
+set nowrap
+set hidden
+set history=100
+set expandtab
+set smartindent
+set autoindent
+set hlsearch
+
+"Remove trailing whitespace
+autocmd BufWritePre * :%s/\s\+$//e "
+
+" ********** KEY BINDINGS
+map <leader>s :source ~/.vimrc<CR>
+map <leader>f :FZF<CR>
+
+" ********** SEARCH
+" Make VIM use FZF
+set rtp+=/usr/local/opt/fzf
+
+" Configure FZF to get its input from Ag (silver searcher)
+" By default, this excludes things located in .gitignore
+let $FZF_DEFAULT_COMMAND= 'ag -g ""'
+
+" Configure Ag (Silver Searcher)
+let g:ag_working_path_mode="r"
+
+" ********** PLUGIN CONFIG
+" Open NERDTree automatically if VIM starts with no files specified
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" NERDTreeTabs mapping
+map <leader>n <plug>NERDTreeTabsToggle<CR>
+
+" Enable mustache mode for VIM
+let g:mustache_abbreviations = 1
+
+" Fix backspace
+set backspace=indent,eol,start
+
+" Project Configuration
+set rtp+=~/.vim/bundle/vim-project
+call project#rc("~/Developer/workspace")
+
+Project 'phoenix'          , 'Phoenix'
+Project 'phoenix-schema'   , 'Phoenix Schema'
+Project 'phoenix-ember'    , 'Phoenix Ember Spike'
+Project 'who-bought-it'    , 'Who Bought It'
+
+" Powerline
+let g:Powerline_symbols = 'fancy'
