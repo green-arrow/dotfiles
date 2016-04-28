@@ -7,4 +7,4 @@ export NVM_DIR=$(readlink "$HOME/.nvm")
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 # By default, use the latest installed 4.x version
-nvm use 4
+nvm use 6

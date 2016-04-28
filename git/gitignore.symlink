@@ -25,6 +25,8 @@ bower_components
 # Sublime #
 *.sublime-*
 
+# IntelliJ #
+.idea/*
 # TERN #
 .tern-project
 .tern-port

@@ -23,8 +23,8 @@ fi
 
 # Install and use Node 4.x by default
 info 'Installing / using Node 4.x'
-nvm install 4 &> /dev/null && nvm use 4 &> /dev/null
+nvm install 6 &> /dev/null && nvm use 6 &> /dev/null
 
 # Install some basic NPM packages
 info 'Installing NPM packages: ember-cli, bower, phantomjs, tern, babel, babel-eslint, eslint, eslint-config-ember, jscs'
-npm install -g ember-cli bower phantomjs tern babel babel-eslint eslint eslint-config-ember jscs 1> /dev/null
+npm install -g ember-cli bower phantomjs tern babel babel-eslint eslint eslint-config-ember jscs redux-cli 1> /dev/null
