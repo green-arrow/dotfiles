@@ -5,12 +5,3 @@
   path = node/nvm
   url = https://github.com/creationix/nvm/
   ignore = dirty
-[submodule "zsh/oh-my-zsh"]
-  path = zsh/oh-my-zsh
-  url = https://github.com/robbyrussell/oh-my-zsh
-[submodule "zsh/zsh-syntax-highlighting"]
-  path = zsh/modules/zsh-syntax-highlighting
-  url = https://github.com/zsh-users/zsh-syntax-highlighting
-[submodule "zsh/zsh-completions"]
-  path = zsh/modules/zsh-completions
-  url = https://github.com/zsh-users/zsh-completions

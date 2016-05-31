@@ -41,6 +41,10 @@ brew 'openssl'
 brew 'readline'
 brew 'fzf'
 brew 'the_silver_searcher'
+brew 'thefuck'
+
+# Fish shell
+brew 'fish'
 
 # Development
 brew 'watchman'

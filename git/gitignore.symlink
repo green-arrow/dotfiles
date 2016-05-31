@@ -18,6 +18,7 @@ Thumbs.db
 # Package Manager *
 node_modules
 bower_components
+/deps
 
 # EMACS #
 .projectile
@@ -27,6 +28,10 @@ bower_components
 
 # IntelliJ #
 .idea/*
+
 # TERN #
 .tern-project
 .tern-port
+
+# VS Code #
+/.vscode

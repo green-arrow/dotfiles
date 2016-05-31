@@ -1,0 +1,22 @@
+# shortcut to this dotfiles path is $DOTFILES_ROOT
+export DOTFILES_ROOT=$HOME/.dotfiles
+
+# your project folder that we can `c [tab]` to
+export PROJECTS=~/Developer/workspace
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if test -e ~/.localrc
+  source ~/.localrc
+end
+
+# load the path files
+for file in (find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'path.fish')
+  source $file
+end
+
+# load everything but the path and completion and ls_aliases
+for file in (find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.fish' -not -name 'path.fish')
+  source $file
+end
