@@ -32,11 +32,11 @@ brew 'p7zip'
 brew 'pv'
 brew 'rename'
 brew 'tree'
+brew 'git'
 
 # Libraries
 brew 'grc'
 brew 'jp2a'
-brew 'libgit2'
 brew 'openssl'
 brew 'readline'
 brew 'fzf'

@@ -20,3 +20,8 @@ end
 for file in (find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.fish' -not -name 'path.fish')
   source $file
 end
+
+# load all fish configuration files (necessary for Fish 2.2.0, since Homebrew doesn't have 2.3.0)
+for file in ~/.config/fish/conf.d/*.fish
+  source $file
+end

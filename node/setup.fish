@@ -7,4 +7,5 @@ export NVM_DIR=(readlink "$HOME/.nvm")
 
 if test -s "$NVM_DIR/nvm.sh"
   bass source "$NVM_DIR/nvm.sh" --no-use
+  nvm use 6
 end
