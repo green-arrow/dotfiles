@@ -8,11 +8,11 @@ This repo was forked from https://github.com/holman/dotfiles and I've customized
 
 The main differences in this repo are:
 
-* Using [antigen](https://github.com/zsh-users/antigen) for ZSH plugin management
+* Use fish shell instead of ZSH
 * Customized OS X defaults
   - Added many additional defaults from https://github.com/zhimsel/dotfiles
-* Added a few new brew / cask packages
-* Set up with NVM and using Node 4.x by default
+* Added a few new brew packages
+* Set up with NVM and using Node 6.x by default
 * Using my own [customized theme for Sublime Text 3](https://github.com/green-arrow/fengshui-theme)
 
 ## install
