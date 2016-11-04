@@ -17,7 +17,7 @@ for file in (find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'path.fish')
 end
 
 # load everything but the path and completion and ls_aliases
-for file in (find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.fish' -not -name 'path.fish')
+for file in (find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.fish' -not -name 'path.fish' -not -name 'ls_aliases.fish')
   source $file
 end
 
@@ -27,6 +27,3 @@ for file in ~/.config/fish/conf.d/*.fish
 end
 
 test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
-
-# Activate RVM
-rvm default

@@ -1,4 +1,5 @@
 tap 'homebrew/bundle'
+tap 'jhawthorn/fzh'
 
 # Install GNU core utilities (those that come with OS X are outdated).
 # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
@@ -17,7 +18,7 @@ brew 'gnu-sed', args: ['with-default-names']
 brew 'wget', args: ['with-iri']
 
 # Install more recent versions of some OS X tools.
-brew 'vim', args: ['override-system-vi']
+brew 'macvim', args: ['env-std', 'with-cscope', 'with-lua', 'with-override-system-vim']
 brew 'homebrew/dupes/grep'
 brew 'homebrew/dupes/openssh'
 brew 'homebrew/dupes/screen'
@@ -28,18 +29,25 @@ brew 'pv'
 brew 'rename'
 brew 'tree'
 brew 'git'
+brew 'python'
+brew 'python3'
 
 # Libraries
+brew 'cmake'
 brew 'grc'
 brew 'jp2a'
 brew 'openssl'
 brew 'readline'
 brew 'fzf'
+brew 'fzy'
 brew 'the_silver_searcher'
 brew 'thefuck'
+brew 'ripgrep'
 
-# Fish shell
+# Shell stuff
 brew 'fish'
+brew 'tmux'
+brew 'reattach-to-user-namespace'
 
 # Development
 brew 'watchman'
