@@ -20,7 +20,7 @@ The main differences in this repo are:
 Run this:
 
 ```sh
-git clone https://github.com/holman/dotfiles.git ~/.dotfiles
+git clone https://github.com/green-arrow/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/bootstrap
 ```
