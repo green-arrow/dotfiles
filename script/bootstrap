@@ -156,7 +156,7 @@ install_dotfiles
 
 # Install homebrew and other dependencies
 info "Installing remaining dependencies"
-if source bin/dot > /tmp/dotfiles-dot 2>&1
+if source bin/dot
 then
   success "Dependencies installed"
 else
