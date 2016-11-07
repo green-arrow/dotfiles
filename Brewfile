@@ -18,7 +18,6 @@ brew 'gnu-sed', args: ['with-default-names']
 brew 'wget', args: ['with-iri']
 
 # Install more recent versions of some OS X tools.
-brew 'macvim', args: ['env-std', 'with-cscope', 'with-lua', 'with-override-system-vim']
 brew 'homebrew/dupes/grep'
 brew 'homebrew/dupes/openssh'
 brew 'homebrew/dupes/screen'
