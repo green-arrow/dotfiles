@@ -7,7 +7,7 @@ pip3 install neovim
 # Setup neovim configuration
 if ! [ -d "~/.config/nvim" ]; then
   mkdir -p ~/.config/nvim
-  ln -s $DOTFILES_ROOD/nvim/init.vim ~/.config/nvim/init.vim
+  ln -s $DOTFILES_ROOT/neovim/init.vim ~/.config/nvim/init.vim
 
   # Setup vim-plug
   curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
