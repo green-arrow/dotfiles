@@ -2392,7 +2392,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>530 478 620 392 0 0 1680 1028 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>595 207 796 473 0 0 1680 1028 </string>
+	<string>762 538 796 473 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>3 471 650 552 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
@@ -2596,14 +2596,16 @@
 			<true/>
 			<key>Background Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.12941176470588237</real>
+				<real>0.084129750728607178</real>
 				<key>Color Space</key>
-				<string>sRGB</string>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.094117647058823528</real>
+				<real>0.084128305315971375</real>
 				<key>Red Component</key>
-				<real>0.086274509803921567</real>
+				<real>0.084130816161632538</real>
 			</dict>
 			<key>Background Image Is Tiled</key>
 			<false/>
@@ -3209,7 +3211,7 @@
 			<key>Use Canonical Parser</key>
 			<false/>
 			<key>Use Cursor Guide</key>
-			<true/>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Vertical Spacing</key>
@@ -3410,14 +3412,16 @@
 			<true/>
 			<key>Background Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.12941176470588237</real>
+				<real>0.084129750728607178</real>
 				<key>Color Space</key>
-				<string>sRGB</string>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.094117647058823528</real>
+				<real>0.084128305315971375</real>
 				<key>Red Component</key>
-				<real>0.086274509803921567</real>
+				<real>0.084130816161632538</real>
 			</dict>
 			<key>Background Image Is Tiled</key>
 			<false/>
