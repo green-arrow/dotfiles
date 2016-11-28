@@ -1,8 +1,8 @@
 """"""""""""""""""""""""""""""""""""""""""""""""
-"  _____  _____ _   _  ___________  ___   _     
-" |  __ \|  ___| \ | ||  ___| ___ \/ _ \ | |    
-" | |  \/| |__ |  \| || |__ | |_/ / /_\ \| |    
-" | | __ |  __|| . ` ||  __||    /|  _  || |    
+"  _____  _____ _   _  ___________  ___   _
+" |  __ \|  ___| \ | ||  ___| ___ \/ _ \ | |
+" | |  \/| |__ |  \| || |__ | |_/ / /_\ \| |
+" | | __ |  __|| . ` ||  __||    /|  _  || |
 " | |_\ \| |___| |\  || |___| |\ \| | | || |____
 "  \____/\____/\_| \_/\____/\_| \_\_| |_/\_____/
 """"""""""""""""""""""""""""""""""""""""""""""""
@@ -92,11 +92,11 @@ vnoremap <Leader>p "+p
 vnoremap <Leader>P "+P
 
 """"""""""""""""""""""""""""""""""""
-"  _   _ ________  ___  _   _ _____ 
+"  _   _ ________  ___  _   _ _____
 " | | | |_   _|  \/  | | | | |_   _|
-" | | | | | | | .  . | | | | | | |  
-" | | | | | | | |\/| | | | | | | |  
-" \ \_/ /_| |_| |  | | | |_| |_| |_ 
+" | | | | | | | .  . | | | | | | |
+" | | | | | | | |\/| | | | | | | |
+" \ \_/ /_| |_| |  | | | |_| |_| |_
 "  \___/ \___/\_|  |_/  \___/ \___/
 """"""""""""""""""""""""""""""""""""
 
@@ -146,6 +146,10 @@ set foldcolumn=1
 set number
 set relativenumber
 
+" Show trailing whitespace
+:highlight ExtraWhitespace ctermbg=red guibg=red
+:match ExtraWhitespace /\s\+$/
+
 """"""""""""""""""""""""""""""""""""""""""""""
 " ______ _     _   _ _____ _____ _   _  _____
 " | ___ \ |   | | | |  __ \_   _| \ | |/  ___|
@@ -164,11 +168,13 @@ Plug 'ryanoasis/vim-devicons'
 " ********** File Browsing / Buffer Management **********
 Plug 'scrooloose/nerdtree'
 Plug 'moll/vim-bbye'
+Plug 'jlanzarotta/bufexplorer'
 
 " ********** General Buffer Formatting **********
 Plug 'editorconfig/editorconfig-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'machakann/vim-highlightedyank'
+Plug 'derekprior/vim-trimmer'
 
 " ********** Status Line **********
 Plug 'vim-airline/vim-airline'
@@ -177,6 +183,7 @@ Plug 'vim-airline/vim-airline-themes'
 " ********** Git Integration **********
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'rhysd/committia.vim'
 
 " ********** Linting / Syntax Validation **********
 Plug 'neomake/neomake'
@@ -293,7 +300,7 @@ let g:deoplete#omni#functions.javascript = [
   \ 'tern#Complete',
   \ 'jspc#omni'
 \]
- 
+
 " Configure deoplete sources
 let g:deoplete#sources = {}
 
@@ -308,7 +315,7 @@ function! s:my_cr_function()
   :pclose
   return pumvisible() ? deoplete#close_popup() : "\<CR>"
 endfunction
- 
+
 " ********** UltiSnips **********
 let g:UltiSnipsExpandTrigger="<C-j>"
 
@@ -368,12 +375,12 @@ let g:mta_filetypes = {
 let g:closetag_filenames = "*.html,*.xhtml,*.js,*.jsx"
 
 """"""""""""""""""""""""""""""""""""
-"  _____ _   _  ________  ___ _____ 
+"  _____ _   _  ________  ___ _____
 " |_   _| | | ||  ___|  \/  ||  ___|
-"   | | | |_| || |__ | .  . || |__  
-"   | | |  _  ||  __|| |\/| ||  __| 
-"   | | | | | || |___| |  | || |___ 
-"   \_/ \_| |_/\____/\_|  |_/\____/ 
+"   | | | |_| || |__ | .  . || |__
+"   | | |  _  ||  __|| |\/| ||  __|
+"   | | | | | || |___| |  | || |___
+"   \_/ \_| |_/\____/\_|  |_/\____/
 """"""""""""""""""""""""""""""""""""
 
 " Enable full color support
