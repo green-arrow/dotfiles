@@ -338,7 +338,7 @@ let g:grepper = {
       \ }
 
 " Custom search commands
-command! -nargs=* FindAll Grepper -noprompt -tool rg -grepprg rg --vimgrep --type-add 'elixir:*.{ex,exs}' <args>
+command! -nargs=* FindAll Grepper -noprompt -tool rg -grepprg rg --vimgrep --type-add 'elixir:*.{ex,exs}' --type-add 'less:*.{less}' <args>
 
 " vim-grepper mappings
 nnoremap <leader>* :Grepper -tool rg -cword -noprompt --type-add 'elixir:*.{ex,exs}'<cr>
@@ -393,7 +393,7 @@ set background=dark
 colorscheme iceberg
 
 " Use a patched font
-set guifont=SauceCodePro\ Nerd\ Font:h16
+set guifont=FiraCode-Retina:h16
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " " => Auto-reload $MYVIMRC when it's updated
