@@ -1,0 +1,41 @@
+# shortcut to this dotfiles path is $DOTFILES_ROOT
+export DOTFILES_ROOT=$HOME/.dotfiles
+
+# your project folder that we can `c [tab]` to
+export PROJECTS=~/Developer/workspace
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
+
+# load the path files
+for file in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'path.zsh')
+do
+  source $file
+done
+
+# load everything but the path and completion and ls_aliases
+for file in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.zsh' -not -name 'path.zsh' -not -name 'completion.zsh' -not -name 'ls_aliases.zsh')
+do
+  source $file
+done
+
+# load ls_aliases (this MUST be done AFTER antigen to prevent console errors due to an issue with an ls arg)
+source "$DOTFILES_ROOT/system/ls_aliases.zsh"
+
+# initialize autocomplete here, otherwise functions won't be loaded
+autoload -U compinit && compinit
+
+# load every completion after autocomplete loads
+for file in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'completion.zsh')
+do
+  source $file
+done
+
+unset config_files
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

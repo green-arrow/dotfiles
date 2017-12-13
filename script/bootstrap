@@ -18,7 +18,7 @@ export DOTFILES_ROOT=$HOME/.dotfiles
 # Bootstrap flow
 #
 # 1. Install Homebrew
-# 2. Install and use Fish shell
+# 2. Install and use zsh shell
 # 3. Setup dotfiles (gitconfig, gitignore, etc)
 # 4. Link dotfiles (suffixed with '.symlink')
 # 5. Install other dependencies
@@ -28,8 +28,8 @@ install_homebrew() {
   "$DOTFILES_ROOT/homebrew/install.sh"
 }
 
-install_fish() {
-  "$DOTFILES_ROOT/fish/install.sh"
+install_zsh() {
+  "$DOTFILES_ROOT/zsh/install.sh"
 }
 
 setup_gitconfig () {
@@ -149,7 +149,7 @@ install_dotfiles () {
 }
 
 install_homebrew
-install_fish
+install_zsh
 setup_gitconfig
 init_submodules
 install_dotfiles

@@ -33,5 +33,3 @@ bower_components
 .tern-project
 .tern-port
 
-# VS Code #
-/.vscode

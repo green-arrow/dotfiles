@@ -8,12 +8,10 @@ This repo was forked from https://github.com/holman/dotfiles and I've customized
 
 The main differences in this repo are:
 
-* Use fish shell instead of ZSH
 * Customized OS X defaults
   - Added many additional defaults from https://github.com/zhimsel/dotfiles
 * Added a few new brew packages
-* Set up with NVM and using Node 6.x by default
-* Using my own [customized theme for Sublime Text 3](https://github.com/green-arrow/fengshui-theme)
+* Set up with NVM and using Node 8.x by default
 
 ## install
 
