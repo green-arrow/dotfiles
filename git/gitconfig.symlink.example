@@ -8,7 +8,7 @@
   email = AUTHOREMAIL
   signingkey = GPGSIGNINGKEY
 [credential]
-  helper = osxkeychain
+  helper = GIT_CREDENTIAL_HELPER
 [color]
   diff = auto
   status = auto
