@@ -247,6 +247,7 @@ nmap <Leader>cf <plug>EasyClipToggleFormattedPaste
 
 " Ale configuration
 let g:ale_fixers = {}
+let g:ale_fixers['json'] = ['jsonlint']
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['markdown'] = ['prettier']
 
