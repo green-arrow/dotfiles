@@ -1,0 +1,100 @@
+# Quick reload
+bind r source-file ~/.tmux.conf
+
+############################################################################
+# Copy / Paste
+############################################################################
+
+# Use vim keybindings in copy mode
+setw -g mode-keys vi
+
+# Use vim style bindings for copying (v enters copy mode, y yanks selection)
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+
+############################################################################
+# Reset Prefix
+############################################################################
+set -g prefix C-Space
+bind-key Space send-prefix # for nested tmux sessions
+
+############################################################################
+# Global options
+############################################################################
+
+# Keep a lot of history
+set-option -g history-limit 10000
+
+# Colors
+setw -g mode-bg black
+set-option -g default-terminal "screen-256color"
+set-option -g pane-active-border-fg green
+
+# Basic settings
+set-window-option -g xterm-keys on # for vim
+set-window-option -g mode-keys vi
+set-window-option -g monitor-activity on
+
+# Automatically set the window title
+setw -g automatic-rename
+
+# Prompt for a name when opening a new window
+bind-key c command-prompt -p "window name: " "new-window; rename-window '%%'"
+
+# Setup mouse support - http://floriancrouzat.net/2010/07/run-tmux-with-mouse-support-in-mac-os-x-terminal-app/
+set -g mouse on
+set -g terminal-overrides 'xterm*:XT:smcup@:rmcup@'
+
+############################################################################
+# Status Bar
+############################################################################
+
+set -g status-justify right
+set -g status-interval 5
+set -g visual-activity on
+
+# Titles (window number, program name, active / not active)
+set-option -g set-titles on
+set-option -g set-titles-string '#H:#S.#I.#P #W #T'
+
+# User powerline
+run-shell "powerline-daemon -q"
+source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+
+############################################################################
+# Theme (tomorrow-night)
+############################################################################
+
+## Status bar
+#set -g status-bg "#373b41"
+#set -g status-fg "#c5c8c6"
+#
+## Higlight active window
+#setw -g window-status-current-bg "#282a2e"
+#setw -g window-status-current-fg "#81a2be"
+#
+## Highlight activity in status bar
+#setw -g window-status-activity-fg "#8abeb7"
+#setw -g window-status-activity-bg "#1d1f21"
+#
+## Pane border colors
+#set -g pane-active-border-bg default
+#set -g pane-active-border-fg "#373b41"
+#set -g pane-border-bg default
+#set -g pane-border-fg "#373b41"
+#
+## Clock
+#set -g clock-mode-colour "#81a2be"
+#set -g clock-mode-style 24
+#
+## Messages
+#set -g message-bg "#8abeb7"
+#set -g message-fg "#000000"
+#set -g message-command-bg "#8abeb7"
+#set -g message-command-fg "#000000"
+#
+## Mode
+#set -g mode-bg "#8abeb7"
+#set -g mode-fg "#000000"
+
+set-option -g default-command "reattach-to-user-namespace -l zsh"
