@@ -2,4 +2,5 @@
 
 # Install powerline
 sudo easy_install pip
-pip install powerline-status --user
+pip install powerline-status
+ln -s ~/.dotfiles/powerline/config ~/.config/powerline

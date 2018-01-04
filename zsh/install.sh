@@ -8,10 +8,10 @@
 . $DOTFILES_ROOT/lib/output.sh
 
 # Check for zgen
-if ! [ -d "~/.zgen" ]; then
+if ! [ -d ~/.zgen ]; then
   info 'Installing / setting up zgen.'
 
-  git clone https://github.com/tarjoilija/zgen.git "~/.zgen"
+  git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 else
   info "zgen is already installed!"
 fi

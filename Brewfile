@@ -1,6 +1,7 @@
 tap 'homebrew/bundle'
-tap 'homebrew/dupes'
 tap 'ravenac95/sudolikeaboss'
+tap 'caskroom/cask'
+tap 'buo/cask-upgrade'
 
 # Install GNU core utilities (those that come with OS X are outdated).
 # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
@@ -19,9 +20,6 @@ brew 'gnu-sed', args: ['with-default-names']
 brew 'wget', args: ['with-iri']
 
 # Install more recent versions of some OS X tools.
-brew 'homebrew/dupes/grep'
-brew 'homebrew/dupes/openssh'
-brew 'homebrew/dupes/screen'
 brew 'ack'
 brew 'lynx'
 brew 'p7zip'
@@ -54,3 +52,16 @@ brew 'sudolikeaboss'
 
 # Development
 brew 'watchman'
+
+# Cask apps
+cask '1password'
+cask 'aerial'
+cask 'alfred'
+cask 'authy'
+cask 'firefox'
+cask 'google-chrome'
+cask 'iterm2'
+cask 'karabiner-elements'
+cask 'scroll-reverser'
+cask 'slack'
+cask 'spectacle'
