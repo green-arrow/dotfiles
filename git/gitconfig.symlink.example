@@ -6,7 +6,6 @@
 [user]
   name = AUTHORNAME
   email = AUTHOREMAIL
-  signingkey = GPGSIGNINGKEY
 [credential]
   helper = GIT_CREDENTIAL_HELPER
 [color]
@@ -42,10 +41,6 @@
 [diff]
   tool = Kaleidoscope
 	indentHeuristic = true
-[commit]
-  gpgsign = true
-[gpg]
-	program = gpg1
 [color "diff"]
 	old = red strike
 	new = green italic
