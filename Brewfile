@@ -1,5 +1,5 @@
 tap 'homebrew/bundle'
-tap 'jhawthorn/fzh'
+tap 'homebrew/dupes'
 tap 'ravenac95/sudolikeaboss'
 
 # Install GNU core utilities (those that come with OS X are outdated).

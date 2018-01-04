@@ -1,4 +1,5 @@
 #!/bin/bash
 
 # Install powerline
-pip install powerline-status
+sudo easy_install pip
+pip install powerline-status --user
