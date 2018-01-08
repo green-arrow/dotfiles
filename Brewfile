@@ -29,6 +29,7 @@ brew 'tree'
 brew 'git'
 brew 'python'
 brew 'python3'
+brew 'vim', args: ['with-override-system-vim']
 
 # Libraries
 brew 'cmake'
