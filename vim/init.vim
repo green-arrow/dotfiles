@@ -134,6 +134,11 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'tpope/vim-repeat'
 Plugin 'svermeulen/vim-easyclip'
 
+" Autocomplete
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/asyncomplete-flow.vim'
+
 " Tabs / panes / buffers
 Plugin 'scrooloose/nerdtree'
 Plugin 'moll/vim-bbye'
@@ -259,6 +264,22 @@ let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
+" Autocomplete
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#flow#get_source_options({
+    \ 'name': 'flow',
+    \ 'whitelist': ['javascript', 'javascript.jsx'],
+    \ 'completor': function('asyncomplete#sources#flow#completor'),
+    \ 'config': {
+    \    'prefer_local': 1,
+    \    'flowbin_path': expand('~/bin/flow'),
+    \    'show_typeinfo': 1,
+    \  },
+    \ }))"
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -332,6 +353,8 @@ elseif executable('ag')
   " Make ack.vim use Ag
   let g:ackprg='ag --vimgrep'
 endif
+
+set regexpengine=1
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " " => Auto-reload .vimrc when it's updated

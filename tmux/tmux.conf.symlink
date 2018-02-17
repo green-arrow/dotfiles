@@ -54,6 +54,7 @@ set -g status-interval 5
 set -g visual-activity on
 
 # Titles (window number, program name, active / not active)
+setw -g allow-rename off
 set-option -g set-titles on
 set-option -g set-titles-string '#H:#S.#I.#P #W #T'
 
