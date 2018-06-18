@@ -1,17 +1,20 @@
 command -v tmux>/dev/null
 tmux_status=$?
 
-if [ $TERM == "xterm-256color" ] && [ $tmux_status -eq 0 ]; then
-  exec tmux new-session -A -s default-session
+if [ $TERM == "xterm-256color-italic" ] && [ $tmux_status -eq 0 ]; then
+  exec env TERM=screen-256color-italic tmux new-session -A -s default-session
 elif [ -d "$HOME/.nvm" ]; then
   export NVM_DIR=$(readlink "$HOME/.nvm")
 
   if [ -s "$NVM_DIR/nvm.sh" ]; then
     source "$NVM_DIR/nvm.sh"
-    nvm use 8
+    nvm use 10
   fi
 fi
 
 export PATH="$HOME/.yarn/bin:$PATH"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# added by travis gem
+[ -f /Users/andrewwa/.travis/travis.sh ] && source /Users/andrewwa/.travis/travis.sh

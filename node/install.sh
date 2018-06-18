@@ -24,4 +24,4 @@ fi
 
 # Install and use Node 8.x by default
 info 'Installing / using Node 8.x'
-nvm install 8 > /dev/null && nvm use 8 > /dev/null
+nvm install 10 > /dev/null && nvm use 10 > /dev/null

@@ -90,8 +90,9 @@ then
   # Follow the keyboard focus while zoomed in
   defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
-  # Set a really fast key repeat.
-  defaults write NSGlobalDomain KeyRepeat -int 2
+  # Set a really fast key repeat and repeat delay.
+  defaults write -g InitialKeyRepeat -int 15
+  defaults write -g KeyRepeat -int 2
 
   #############################################################################
   # Finder

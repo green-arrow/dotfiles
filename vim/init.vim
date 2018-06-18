@@ -195,6 +195,17 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" Enable italics for Dank Mono font
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+hi htmlArg   cterm=italic
+hi Comment   cterm=italic
+hi Type      cterm=italic
+hi Keyword   cterm=italic
+hi Special   cterm=italic
+hi Statement cterm=italic
+hi Include   cterm=italic
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -255,6 +266,8 @@ let g:ale_fixers = {}
 let g:ale_fixers['json'] = []
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['markdown'] = ['prettier']
+
+let g:ale_pattern_options = {'workbox': {'ale_fixers': []}}
 
 let g:ale_fix_on_save = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
@@ -327,6 +340,7 @@ nnoremap ; :Buffers<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>r :Tags<CR>
 nnoremap <leader>a :Ack! <cword><CR>
+nnoremap <leader>/ :Ack! ""<Left>
 
 if executable('rg')
   " --files: List files that would be searched but do not search

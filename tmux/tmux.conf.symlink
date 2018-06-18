@@ -98,4 +98,6 @@ source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline
 #set -g mode-bg "#8abeb7"
 #set -g mode-fg "#000000"
 
+set -g default-terminal "screen-256color-italic"
+set -as terminal-overrides ',xterm*:sitm=\E[3m'
 set-option -g default-command "reattach-to-user-namespace -l zsh"
