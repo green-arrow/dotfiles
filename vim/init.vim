@@ -117,62 +117,65 @@ set relativenumber
 " " => Plugin management (vundle)
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Set filetype off initially, required by vundle
+" Set filetype off initially
 filetype off
 
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle
-Plugin 'VundleVim/Vundle.vim'
+" Initialize vim-plug
+call plug#begin('~/.vim/plugged')
 
 " install our plugins
 
 " General
-Plugin 'flazz/vim-colorschemes'
-Plugin 'tpope/vim-repeat'
-Plugin 'svermeulen/vim-easyclip'
+Plug 'flazz/vim-colorschemes'
+Plug 'tpope/vim-repeat'
+Plug 'svermeulen/vim-easyclip'
+Plug 'SirVer/ultisnips'
 
-" Autocomplete
-Plugin 'prabirshrestha/async.vim'
-Plugin 'prabirshrestha/asyncomplete.vim'
-Plugin 'prabirshrestha/asyncomplete-flow.vim'
+" Autocomplete / Language support
+Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 
 " Tabs / panes / buffers
-Plugin 'scrooloose/nerdtree'
-Plugin 'moll/vim-bbye'
+Plug 'scrooloose/nerdtree'
+Plug 'moll/vim-bbye'
 
 " Git integration
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Search
-Plugin 'junegunn/fzf.vim'
-Plugin 'mileszs/ack.vim'
+Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
 
 " Formatting / Linting
-Plugin 'w0rp/ale'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'tpope/vim-surround'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'tomtom/tcomment_vim'
+Plug 'w0rp/ale'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'tomtom/tcomment_vim'
 
 " Javascript
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'green-arrow/vim-react-snippets'
 
 " Elixir
-Plugin 'elixir-lang/vim-elixir'
+Plug 'elixir-lang/vim-elixir'
 
 " Icons for vim
-Plugin 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 
-" let vundle know we're done with our plugins
-call vundle#end()            " required
+" Initialize plugins
+call plug#end()
 
-" Enable filetype plugins once vundle is done
+" Enable filetype plugins
 filetype plugin on
 filetype indent on
 
@@ -267,31 +270,54 @@ let g:ale_fixers['json'] = []
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['markdown'] = ['prettier']
 
+let g:ale_linters = {}
+let g:ale_linters['javascript'] = ['eslint', 'flow']
+
 let g:ale_pattern_options = {'workbox': {'ale_fixers': []}}
 
 let g:ale_fix_on_save = 1
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
+let g:ale_javascript_prettier_use_local_config = 1
+
+" Snippets
+let g:UltiSnipsExpandTrigger="<C-j>"
 
 " Javascript / JSX
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
-" Autocomplete
+" Autocomplete / Language support
+let g:deoplete#enable_at_startup = 1
+let g:LanguageClient_serverCommands = {
+      \ 'javascript': ['flow-language-server', '--stdio', '--try-flow-bin'],
+      \ 'javascript.jsx': ['flow-language-server', '--stdio', '--try-flow-bin'],
+      \ }
+let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_rootMarkers = ['.flowconfig']
+let g:LanguageClient_loggingFile = "/Users/andrewwa/.local/log/vim/LanguageClient.log"
+let g:LanguageClient_hoverPreview = "Never"
+let g:LanguageClient_fzfContextMenu = 0
+set completeopt-=preview
+" let g:LanguageClient_loggingLevel = "DEBUG"
+
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#flow#get_source_options({
-    \ 'name': 'flow',
-    \ 'whitelist': ['javascript', 'javascript.jsx'],
-    \ 'completor': function('asyncomplete#sources#flow#completor'),
-    \ 'config': {
-    \    'prefer_local': 1,
-    \    'flowbin_path': expand('~/bin/flow'),
-    \    'show_typeinfo': 1,
-    \  },
-    \ }))"
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#flow#get_source_options({
+"     \ 'name': 'flow',
+"     \ 'whitelist': ['javascript', 'javascript.jsx'],
+"     \ 'completor': function('asyncomplete#sources#flow#completor'),
+"     \ 'config': {
+"     \    'prefer_local': 1,
+"     \    'flowbin_path': expand('~/bin/flow'),
+"     \    'show_typeinfo': 1,
+"     \  },
+"     \ }))"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs and buffers

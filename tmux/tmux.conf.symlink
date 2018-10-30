@@ -9,8 +9,10 @@ bind r source-file ~/.tmux.conf
 setw -g mode-keys vi
 
 # Use vim style bindings for copying (v enters copy mode, y yanks selection)
-bind-key -T copy-mode-vi v send-keys -X begin-selection
-bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key -T copy-mode-vi v send -X begin-selection
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
 
 ############################################################################
 # Reset Prefix
@@ -100,4 +102,4 @@ source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline
 
 set -g default-terminal "screen-256color-italic"
 set -as terminal-overrides ',xterm*:sitm=\E[3m'
-set-option -g default-command "reattach-to-user-namespace -l zsh"
+set-option -g default-shell /bin/zsh
