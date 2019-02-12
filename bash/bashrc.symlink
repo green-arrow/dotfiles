@@ -12,7 +12,11 @@ elif [ -d "$HOME/.nvm" ]; then
   fi
 fi
 
+# Add yarn to path
 export PATH="$HOME/.yarn/bin:$PATH"
+
+# Add python 3.7 to path
+export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

@@ -38,6 +38,10 @@ done
 
 unset config_files
 
+# use bat for better output for cat
+alias cat=bat
+
+# enable fzf for searching
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # added by travis gem

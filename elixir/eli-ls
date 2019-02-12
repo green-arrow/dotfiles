@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+env ERL_LIBS=~/.dotfiles/elixir/elixir-ls ~/.dotfiles/elixir/elixir-ls/language_server.sh

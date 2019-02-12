@@ -130,6 +130,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Autocomplete / Language support
 Plug 'autozimu/LanguageClient-neovim', {
@@ -165,6 +166,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'green-arrow/vim-react-snippets'
+
+" Typescript
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
@@ -269,9 +274,11 @@ let g:ale_fixers = {}
 let g:ale_fixers['json'] = []
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['markdown'] = ['prettier']
+let g:ale_fixers['elixir'] = ['mix_format']
 
 let g:ale_linters = {}
 let g:ale_linters['javascript'] = ['eslint', 'flow']
+let g:ale_linters['elixir'] = ['elixir-ls']
 
 let g:ale_pattern_options = {'workbox': {'ale_fixers': []}}
 
@@ -291,14 +298,16 @@ let g:deoplete#enable_at_startup = 1
 let g:LanguageClient_serverCommands = {
       \ 'javascript': ['flow-language-server', '--stdio', '--try-flow-bin'],
       \ 'javascript.jsx': ['flow-language-server', '--stdio', '--try-flow-bin'],
+      \ 'elixir': ['~/.dotfiles/elixir/eli-ls']
       \ }
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_loadSettings = 1
 " let g:LanguageClient_rootMarkers = ['.flowconfig']
 let g:LanguageClient_loggingFile = "/Users/andrewwa/.local/log/vim/LanguageClient.log"
 let g:LanguageClient_hoverPreview = "Never"
 let g:LanguageClient_fzfContextMenu = 0
 set completeopt-=preview
-" let g:LanguageClient_loggingLevel = "DEBUG"
+let g:LanguageClient_loggingLevel = "DEBUG"
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -307,6 +316,8 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+autocmd FileType typescript nmap <buffer> <leader>e <Plug>(TsuquyomiRenameSymbol)
 
 " au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#flow#get_source_options({
 "     \ 'name': 'flow',
