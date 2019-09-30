@@ -22,6 +22,6 @@ else
   info 'NVM is already installed! (version $(nvm --version))'
 fi
 
-# Install and use Node 8.x by default
-info 'Installing / using Node 8.x'
-nvm install 10 > /dev/null && nvm use 10 > /dev/null
+# Install and use the latest Node LTS by default
+info 'Installing / using latest Node LTS'
+nvm install --lts > /dev/null && nvm use --lts > /dev/null

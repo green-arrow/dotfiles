@@ -34,6 +34,3 @@ export GIT_PS1_SHOWUPSTREAM="verbose"
 # Add keybindings for history-substring-search
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
-
-# Add 'thefuck' support
-eval $(SHELL=bash thefuck --alias)

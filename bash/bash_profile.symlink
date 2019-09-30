@@ -1,3 +1,9 @@
 if [ -f ~/.bashrc ]; then
    source ~/.bashrc
 fi
+
+#OktaAWSCLI
+if [ -f "~/.okta/bash_functions" ]; then
+    . "~/.okta/bash_functions"
+fi
+

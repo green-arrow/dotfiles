@@ -54,6 +54,7 @@ brew 'sudolikeaboss'
 
 # Development
 brew 'watchman'
+brew 'kubernetes-cli'
 
 # Cask apps
 cask '1password'

@@ -10,6 +10,7 @@
 " "    -> Files and backups
 " "    -> Text, tab and indent related
 " "    -> Plugin configuration
+" "    -> Autocompletion with coc.nvim
 " "    -> Moving around, tabs and buffers
 " "    -> Edit mappings
 " "    -> vimgrep searching and cope displaying
@@ -125,21 +126,16 @@ call plug#begin('~/.vim/plugged')
 
 " install our plugins
 
-" General
-Plug 'flazz/vim-colorschemes'
-Plug 'tpope/vim-repeat'
-Plug 'svermeulen/vim-easyclip'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-" Autocomplete / Language support
-Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
-Plug 'Shougo/deoplete.nvim'
+" neovim plugin support
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
+
+" General
+Plug 'arcticicestudio/nord-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-repeat'
+Plug 'svermeulen/vim-easyclip'
+Plug 'honza/vim-snippets'
 
 " Tabs / panes / buffers
 Plug 'scrooloose/nerdtree'
@@ -155,7 +151,6 @@ Plug 'mileszs/ack.vim'
 
 " Formatting / Linting
 Plug 'w0rp/ale'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
@@ -169,13 +164,18 @@ Plug 'green-arrow/vim-react-snippets'
 
 " Typescript
 Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
+
+" GraphQL
+Plug 'jparise/vim-graphql'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
 
 " Icons for vim
 Plug 'ryanoasis/vim-devicons'
+
+" Autocomplete
+Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 
 " Initialize plugins
 call plug#end()
@@ -188,14 +188,14 @@ filetype indent on
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Set colorscheme from flazz/vim-colorschemes
-colorscheme blazer
-
 " Enable syntax highlighting
 syntax enable
 
-" Use a dark background
-set background=dark
+" Use a dark background and colorscheme
+" set background=dark
+let g:nord_italic = 1
+let g:nord_italic_comments = 1
+colorscheme nord
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -236,7 +236,7 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
-" 1 tab == 4 spaces
+" 1 tab == 2 spaces
 set shiftwidth=2
 set tabstop=2
 
@@ -254,8 +254,19 @@ autocmd BufWritePre * FixWhitespace
 " => Plugin Configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Make sure editorconfig plays nice with fugitive
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+" Lighline configuration
+let g:lightline = {
+      \ 'colorscheme': 'nord',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+      \ }
 
 " Open git diffs in new tab
 function! GdiffInTab()
@@ -271,8 +282,9 @@ nmap <Leader>cf <plug>EasyClipToggleFormattedPaste
 
 " Ale configuration
 let g:ale_fixers = {}
-let g:ale_fixers['json'] = []
+let g:ale_fixers['json'] = ['prettier']
 let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fixers['typescript'] = ['prettier']
 let g:ale_fixers['markdown'] = ['prettier']
 let g:ale_fixers['elixir'] = ['mix_format']
 
@@ -280,55 +292,89 @@ let g:ale_linters = {}
 let g:ale_linters['javascript'] = ['eslint', 'flow']
 let g:ale_linters['elixir'] = ['elixir-ls']
 
-let g:ale_pattern_options = {'workbox': {'ale_fixers': []}}
+let g:ale_pattern_options = {
+      \ 'workbox': {'ale_fixers': []},
+      \ 'percy-agent': {'ale_fixers': []}
+      \}
 
 let g:ale_fix_on_save = 1
 let g:ale_javascript_prettier_use_local_config = 1
-
-" Snippets
-let g:UltiSnipsExpandTrigger="<C-j>"
+let g:ale_typescript_prettier_use_local_config = 1
 
 " Javascript / JSX
 let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
-" Autocomplete / Language support
-let g:deoplete#enable_at_startup = 1
-let g:LanguageClient_serverCommands = {
-      \ 'javascript': ['flow-language-server', '--stdio', '--try-flow-bin'],
-      \ 'javascript.jsx': ['flow-language-server', '--stdio', '--try-flow-bin'],
-      \ 'elixir': ['~/.dotfiles/elixir/eli-ls']
-      \ }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_loadSettings = 1
-" let g:LanguageClient_rootMarkers = ['.flowconfig']
-let g:LanguageClient_loggingFile = "/Users/andrewwa/.local/log/vim/LanguageClient.log"
-let g:LanguageClient_hoverPreview = "Never"
-let g:LanguageClient_fzfContextMenu = 0
-set completeopt-=preview
-let g:LanguageClient_loggingLevel = "DEBUG"
+au BufReadPost *.tsx set ft=typescript.tsx
+au BufReadPost *.ejs set ft=html
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Autocompletion with coc.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-autocmd FileType typescript nmap <buffer> <leader>e <Plug>(TsuquyomiRenameSymbol)
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-" au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#flow#get_source_options({
-"     \ 'name': 'flow',
-"     \ 'whitelist': ['javascript', 'javascript.jsx'],
-"     \ 'completor': function('asyncomplete#sources#flow#completor'),
-"     \ 'config': {
-"     \    'prefer_local': 1,
-"     \    'flowbin_path': expand('~/bin/flow'),
-"     \    'show_typeinfo': 1,
-"     \  },
-"     \ }))"
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs and buffers
@@ -366,7 +412,7 @@ set splitbelow
 noremap 0 ^
 
 " Easy way to open vimrc
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+:nnoremap <leader>ev :vsplit ~/.config/nvim/init.vim<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Search
@@ -375,7 +421,6 @@ noremap 0 ^
 " Map double leader to FZF file search
 nnoremap ; :Buffers<CR>
 nnoremap <leader>t :Files<CR>
-nnoremap <leader>r :Tags<CR>
 nnoremap <leader>a :Ack! <cword><CR>
 nnoremap <leader>/ :Ack! ""<Left>
 
@@ -405,7 +450,8 @@ elseif executable('ag')
   let g:ackprg='ag --vimgrep'
 endif
 
-set regexpengine=1
+" set regexpengine=1
+let g:coc_force_debug=1
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " " => Auto-reload .vimrc when it's updated
@@ -413,5 +459,5 @@ set regexpengine=1
 
 augroup reload_vimrc " {
   autocmd!
-  autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
+  autocmd BufWritePost ~/.config/nvim/init.vim nested source ~/.config/nvim/init.vim
 augroup END " }

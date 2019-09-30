@@ -6,5 +6,5 @@
 export NVM_DIR=$(readlink "$HOME/.nvm")
 [ -s "$NVM_DIR/nvm.sh"  ] && . "$NVM_DIR/nvm.sh"
 
-# By default, use the latest installed 8.x version
-nvm use 8
+# By default, use the latest Node LTS version
+nvm use --lts

@@ -41,6 +41,25 @@ unset config_files
 # use bat for better output for cat
 alias cat=bat
 
+# Add 'thefuck' support
+eval $(SHELL=bash thefuck --alias)
+
+# Add kubernetes-cli completion
+source <(kubectl completion zsh)
+
+# Add python 3.7 to path
+export PATH="$HOME/Library/Python/3.7/bin:$HOME/Library/Python/2.7/bin:$PATH"
+
+# Add java aliases
+alias j12="export JAVA_HOME=`/usr/libexec/java_home -v 12`; java -version"
+alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
+alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
+
+#OktaAWSCLI
+if [ -f "~/.okta/bash_functions" ]; then
+  . "~/.okta/bash_functions"
+fi
+
 # enable fzf for searching
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
