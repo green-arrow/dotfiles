@@ -159,11 +159,15 @@ Plug 'tomtom/tcomment_vim'
 " Javascript
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'jxnblk/vim-mdx-js'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'green-arrow/vim-react-snippets'
 
 " Typescript
 Plug 'leafgarland/typescript-vim'
+
+" Svelte
+Plug 'evanleck/vim-svelte'
 
 " GraphQL
 Plug 'jparise/vim-graphql'
@@ -175,7 +179,7 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'ryanoasis/vim-devicons'
 
 " Autocomplete
-Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Initialize plugins
 call plug#end()
@@ -281,18 +285,37 @@ let g:EasyClipAutoFormat = 1
 nmap <Leader>cf <plug>EasyClipToggleFormattedPaste
 
 " Ale configuration
-let g:ale_fixers = {}
-let g:ale_fixers['json'] = ['prettier']
-let g:ale_fixers['javascript'] = ['prettier']
-let g:ale_fixers['typescript'] = ['prettier']
-let g:ale_fixers['markdown'] = ['prettier']
-let g:ale_fixers['elixir'] = ['mix_format']
+let g:ale_fixers = {
+      \ 'json': ['prettier'],
+      \ 'javascript': ['prettier', 'eslint'],
+      \ 'typescript': ['prettier', 'eslint'],
+      \ 'svelte': ['prettier', 'eslint'],
+      \ 'markdown': ['prettier'],
+      \ 'elixir': ['mix_format'],
+      \}
 
-let g:ale_linters = {}
-let g:ale_linters['javascript'] = ['eslint', 'flow']
-let g:ale_linters['elixir'] = ['elixir-ls']
+let g:ale_fixer_aliases = {
+      \ 'typescript.tsx': 'typescript',
+      \ 'markdown.mdx': 'typescript'
+      \}
+
+let g:ale_linters = {
+      \ 'json': ['eslint'],
+      \ 'javascript': ['eslint'],
+      \ 'typescript': ['eslint'],
+      \ 'svelte': ['eslint'],
+      \ 'markdown': ['eslint'],
+      \ 'elixir': ['elixir-ls']
+      \}
+
+let g:ale_linter_aliases = {
+      \ 'svelte': ['css', 'javascript'],
+      \ 'typescript.tsx': 'typescript',
+      \ 'markdown.mdx': 'typescript'
+      \}
 
 let g:ale_pattern_options = {
+      \ 'node_modules': {'ale_fixers': []},
       \ 'workbox': {'ale_fixers': []},
       \ 'percy-agent': {'ale_fixers': []}
       \}
@@ -312,25 +335,26 @@ au BufReadPost *.ejs set ft=html
 " => Autocompletion with coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+" use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+" Use Tab and S-Tab to navigate the completion list
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use <cr> to confirm completion
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -341,6 +365,12 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Close the preview window when completion is done
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -354,10 +384,7 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 augroup mygroup
   autocmd!
@@ -451,7 +478,7 @@ elseif executable('ag')
 endif
 
 " set regexpengine=1
-let g:coc_force_debug=1
+" let g:coc_force_debug=1
 
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " " => Auto-reload .vimrc when it's updated

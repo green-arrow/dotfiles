@@ -56,12 +56,16 @@ alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
 alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 
 #OktaAWSCLI
-if [ -f "~/.okta/bash_functions" ]; then
-  . "~/.okta/bash_functions"
+OKTA_FILE="~/.okta/bash_functions"
+if [[ -a ~/.okta/bash_functions ]]; then
+  source ~/.okta/bash_functions
 fi
 
+# Cisco VPN connection
+alias vpn=$HOME/Developer/vpn_login_1password_cli.sh
+
 # enable fzf for searching
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -a ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 # added by travis gem
-[ -f /Users/andrewwa/.travis/travis.sh ] && source /Users/andrewwa/.travis/travis.sh
+[[ -a /Users/andrewwa/.travis/travis.sh ]] && source /Users/andrewwa/.travis/travis.sh
