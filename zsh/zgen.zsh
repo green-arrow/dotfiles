@@ -8,8 +8,7 @@ if ! zgen saved; then
   zgen oh-my-zsh
 
   # Plugins for oh-my-zsh
-  zgen oh-my-zsh plugins/gitfast
-  zgen oh-my-zsh plugins/git-extras
+  zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/osx
   zgen oh-my-zsh plugins/asdf
   zgen oh-my-zsh plugins/history-substring-search

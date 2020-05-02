@@ -51,9 +51,9 @@ source <(kubectl completion zsh)
 export PATH="$HOME/Library/Python/3.7/bin:$HOME/Library/Python/2.7/bin:$PATH"
 
 # Add java aliases
-alias j12="export JAVA_HOME=`/usr/libexec/java_home -v 12`; java -version"
-alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
-alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
+# alias j12="export JAVA_HOME=`/usr/libexec/java_home -v 12`; java -version"
+# alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
+# alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 
 #OktaAWSCLI
 OKTA_FILE="~/.okta/bash_functions"

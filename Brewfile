@@ -1,6 +1,5 @@
 tap 'homebrew/bundle'
 tap 'ravenac95/sudolikeaboss'
-tap 'caskroom/cask'
 tap 'buo/cask-upgrade'
 
 # Install GNU core utilities (those that come with OS X are outdated).
@@ -16,9 +15,6 @@ brew 'findutils'
 # Install GNU `sed`, overwriting the built-in `sed`.
 brew 'gnu-sed', args: ['with-default-names']
 
-# Install `wget` with IRI support.
-brew 'wget', args: ['with-iri']
-
 # Install more recent versions of some OS X tools.
 brew 'ack'
 brew 'lynx'
@@ -29,7 +25,7 @@ brew 'tree'
 brew 'git'
 brew 'python'
 brew 'python3'
-brew 'vim', args: ['with-override-system-vim']
+brew 'wget'
 
 # Libraries
 brew 'cmake'
@@ -46,6 +42,7 @@ brew 'thefuck'
 brew 'ripgrep'
 
 # Shell stuff
+brew 'jq'
 brew 'bat'
 brew 'zsh'
 brew 'tmux'
@@ -53,11 +50,13 @@ brew 'reattach-to-user-namespace'
 brew 'sudolikeaboss'
 
 # Development
+brew 'neovim'
 brew 'watchman'
 brew 'kubernetes-cli'
 
 # Cask apps
 cask '1password'
+cask '1password-cli'
 cask 'aerial'
 cask 'alfred'
 cask 'authy'
