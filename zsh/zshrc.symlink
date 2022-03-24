@@ -42,7 +42,7 @@ unset config_files
 alias cat=bat
 
 # Add 'thefuck' support
-eval $(SHELL=bash thefuck --alias)
+eval $(SHELL=zsh thefuck --alias)
 
 # Add kubernetes-cli completion
 source <(kubectl completion zsh)
@@ -52,20 +52,27 @@ export PATH="$HOME/Library/Python/3.7/bin:$HOME/Library/Python/2.7/bin:$PATH"
 
 # Add java aliases
 # alias j12="export JAVA_HOME=`/usr/libexec/java_home -v 12`; java -version"
-# alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
-# alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
+alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
+alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 
 #OktaAWSCLI
-OKTA_FILE="~/.okta/bash_functions"
-if [[ -a ~/.okta/bash_functions ]]; then
+if [[ -e ~/.okta/bash_functions ]]; then
   source ~/.okta/bash_functions
 fi
 
-# Cisco VPN connection
-alias vpn=$HOME/Developer/vpn_login_1password_cli.sh
+# VPN connections
+alias vpn=$HOME/Developer/scripts/vpn_login_1password_cli.sh
+alias zg_start='sudo $HOME/Developer/scripts/ovpn_connect.sh https://techops.dotloop.com/pacfiles/zgaccess-hybrid.pac'
+alias zg_stop='sudo $HOME/Developer/scripts/ovpn_disconnect.sh'
 
 # enable fzf for searching
 [[ -a ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# mysql connections for dotloop envs
+alias mysql_dl_dev='mysql --defaults-group-suffix=dotloopDev'
 
 # added by travis gem
 [[ -a /Users/andrewwa/.travis/travis.sh ]] && source /Users/andrewwa/.travis/travis.sh

@@ -9,7 +9,7 @@ if ! zgen saved; then
 
   # Plugins for oh-my-zsh
   zgen oh-my-zsh plugins/git
-  zgen oh-my-zsh plugins/osx
+  zgen oh-my-zsh plugins/macos
   zgen oh-my-zsh plugins/asdf
   zgen oh-my-zsh plugins/history-substring-search
   zgen oh-my-zsh plugins/jsontools

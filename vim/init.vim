@@ -131,7 +131,7 @@ Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 
 " General
-Plug 'arcticicestudio/nord-vim'
+Plug 'sainnhe/sonokai'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
@@ -165,9 +165,10 @@ Plug 'green-arrow/vim-react-snippets'
 
 " Typescript
 Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
 " Svelte
-Plug 'evanleck/vim-svelte'
+Plug 'leafOfTree/vim-svelte-plugin'
 
 " GraphQL
 Plug 'jparise/vim-graphql'
@@ -180,6 +181,8 @@ Plug 'ryanoasis/vim-devicons'
 
 " Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
 " Initialize plugins
 call plug#end()
@@ -197,9 +200,18 @@ syntax enable
 
 " Use a dark background and colorscheme
 " set background=dark
-let g:nord_italic = 1
-let g:nord_italic_comments = 1
-colorscheme nord
+" let g:nord_italic = 1
+" let g:nord_italic_comments = 1
+set termguicolors
+colorscheme sonokai
+let g:embark_terminal_italics = 1
+
+" Disable the background, so the terminal background shows through
+" hi Normal guibg=NONE ctermbg=NONE
+" hi SignColumn guibg=NONE ctermbg=NONE
+" hi LineNr guibg=NONE ctermbg=NONE
+" hi VertSplit guibg=NONE ctermbg=NONE
+" let g:gitgutter_override_sign_column_highlight = 0
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -252,6 +264,7 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+" Automatically remove leading / traling whitespace on write
 autocmd BufWritePre * FixWhitespace
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -260,7 +273,7 @@ autocmd BufWritePre * FixWhitespace
 
 " Lighline configuration
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'nightowl',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -331,6 +344,9 @@ let g:jsx_ext_required = 0
 au BufReadPost *.tsx set ft=typescript.tsx
 au BufReadPost *.ejs set ft=html
 
+" Svelte
+let g:vim_svelte_plugin_load_full_syntax = 1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocompletion with coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -362,7 +378,7 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
@@ -379,7 +395,7 @@ function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 

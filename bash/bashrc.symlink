@@ -22,3 +22,5 @@ export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 
 # added by travis gem
 [ -f /Users/andrewwa/.travis/travis.sh ] && source /Users/andrewwa/.travis/travis.sh
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

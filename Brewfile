@@ -53,6 +53,11 @@ brew 'sudolikeaboss'
 brew 'neovim'
 brew 'watchman'
 brew 'kubernetes-cli'
+brew 'yarn'
+
+# Elixir / erlang
+brew 'autoconf'
+brew 'wxmac'
 
 # Cask apps
 cask '1password'
