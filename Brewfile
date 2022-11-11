@@ -12,9 +12,6 @@ brew 'moreutils'
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
 brew 'findutils'
 
-# Install GNU `sed`, overwriting the built-in `sed`.
-brew 'gnu-sed', args: ['with-default-names']
-
 # Install more recent versions of some OS X tools.
 brew 'ack'
 brew 'lynx'
@@ -23,7 +20,6 @@ brew 'pv'
 brew 'rename'
 brew 'tree'
 brew 'git'
-brew 'python'
 brew 'python3'
 brew 'wget'
 
@@ -47,7 +43,6 @@ brew 'bat'
 brew 'zsh'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
-brew 'sudolikeaboss'
 
 # Development
 brew 'neovim'
@@ -60,17 +55,12 @@ brew 'autoconf'
 brew 'wxmac'
 
 # Cask apps
-cask '1password'
 cask '1password-cli'
 cask 'aerial'
 cask 'alfred'
 cask 'authy'
 cask 'firefox'
 cask 'flux'
-cask 'google-chrome'
 cask 'iterm2'
 cask 'karabiner-elements'
-cask 'lightsoff'
 cask 'scroll-reverser'
-cask 'slack'
-cask 'spectacle'

@@ -33,3 +33,5 @@ bower_components
 .tern-project
 .tern-port
 
+# Local .ignore files for neovim search with `ag`
+.ignore

@@ -3,8 +3,8 @@
 # Solution: https://github.com/creationix/nvm/issues/855#issuecomment-160232254
 # Actual issue: https://github.com/creationix/nvm/issues/617
 
-export NVM_DIR=$(readlink "$HOME/.nvm")
-[ -s "$NVM_DIR/nvm.sh"  ] && . "$NVM_DIR/nvm.sh"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# By default, use the latest Node LTS version
-nvm use --lts
+nvm use 16 > /dev/null

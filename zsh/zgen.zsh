@@ -16,7 +16,7 @@ if ! zgen saved; then
   zgen oh-my-zsh plugins/z
 
   # Non oh-my-zsh plugins
-  zgen load bhilburn/powerlevel9k powerlevel9k
+  zgen load romkatv/powerlevel10k powerlevel10k
 
   # generate the init script from plugins above
   zgen save

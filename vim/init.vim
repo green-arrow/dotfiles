@@ -51,6 +51,9 @@ command! W w !sudo tee % > /dev/null
 " Turn off auto comment insertion for vim files
 au FileType vim setlocal fo-=c fo-=r fo-=o
 
+" Restore global session variables
+set sessionoptions+=globals
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -131,8 +134,8 @@ Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 
 " General
-Plug 'sainnhe/sonokai'
-Plug 'itchyny/lightline.vim'
+Plug '~/Code/sonokai'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'honza/vim-snippets'
@@ -146,6 +149,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 " Search
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 
@@ -155,6 +159,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tomtom/tcomment_vim'
+Plug 'editorconfig/editorconfig-vim'
 
 " Javascript
 Plug 'pangloss/vim-javascript'
@@ -176,13 +181,18 @@ Plug 'jparise/vim-graphql'
 " Elixir
 Plug 'elixir-lang/vim-elixir'
 
-" Icons for vim
-Plug 'ryanoasis/vim-devicons'
+" Python
+Plug 'vim-python/python-syntax'
+Plug 'Vimjas/vim-python-pep8-indent'
 
-" Autocomplete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Icons for vim
+Plug 'kyazdani42/nvim-web-devicons'
+
+" Autocomplete / Intelligent Assistance
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
+Plug 'github/copilot.vim'
 
 " Initialize plugins
 call plug#end()
@@ -203,6 +213,8 @@ syntax enable
 " let g:nord_italic = 1
 " let g:nord_italic_comments = 1
 set termguicolors
+let g:sonokai_style = 'nord'
+let g:sonokai_better_performance = 1
 colorscheme sonokai
 let g:embark_terminal_italics = 1
 
@@ -262,6 +274,7 @@ set tw=500
 
 set ai "Auto indent
 set si "Smart indent
+set cindent "Like smartindent, but stricter"
 set wrap "Wrap lines
 
 " Automatically remove leading / traling whitespace on write
@@ -271,19 +284,10 @@ autocmd BufWritePre * FixWhitespace
 " => Plugin Configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Lighline configuration
-let g:lightline = {
-      \ 'colorscheme': 'nightowl',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
-      \ }
+" Lualine configuration
+lua << END
+require('lualine_config')
+END
 
 " Open git diffs in new tab
 function! GdiffInTab()
@@ -293,7 +297,7 @@ endfunction
 command! GdiffInTab tabedit %|Gvdiff
 
 " EasyClip settings
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 let g:EasyClipAutoFormat = 1
 nmap <Leader>cf <plug>EasyClipToggleFormattedPaste
 
@@ -344,33 +348,44 @@ let g:jsx_ext_required = 0
 au BufReadPost *.tsx set ft=typescript.tsx
 au BufReadPost *.ejs set ft=html
 
+" Python
+let g:python_highlight_all = 1
+
 " Svelte
 let g:vim_svelte_plugin_load_full_syntax = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocompletion with coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:WorkspaceFolders = ['~/Code/services-frontend/frontend', '~/Code/services-frontend/graphql']
 
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" Use Tab and S-Tab to navigate the completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Use <cr> to confirm completion
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -388,17 +403,16 @@ nmap <leader>rn <Plug>(coc-rename)
 " Close the preview window when completion is done
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
   endif
 endfunction
-
 " Highlight symbol under cursor on CursorHold
 " autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -418,6 +432,34 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Github Copilot
+nmap <leader>cs :Copilot panel<CR>
+
+" LanguageServer config for Flow
+" Source: https://flow.org/en/docs/editors/vim/#toc-coc-nvim-neovim
+" autocmd FileType javascript.jsx let b:coc_root_patterns = ['.git', '.env', '.flowconfig']
+" let s:LSP_CONFIG = {
+"       \  'flow': {
+"         \    'command': "${workspaceFolder}/node_modules/.bin/flow",
+"         \    'args': ['lsp'],
+"         \    'filetypes': ['javascript', 'javascriptreact', 'javascript.jsx'],
+"         \    'initializationOptions': {},
+"         \    'requireRootPattern': 1,
+"         \    'settings': {},
+"         \    'rootPatterns': ['.flowconfig']
+"       \  }
+"       \}
+
+" let s:languageservers = {}
+" for [lsp, config] in items(s:LSP_CONFIG)
+"   let s:not_empty_cmd = !empty(get(config, 'command'))
+"   if s:not_empty_cmd | let s:languageservers[lsp] = config | endif
+" endfor
+"
+" if !empty(s:languageservers)
+"   call coc#config('languageserver', s:languageservers)
+" endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs and buffers

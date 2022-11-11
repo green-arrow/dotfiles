@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # shortcut to this dotfiles path is $DOTFILES_ROOT
 export DOTFILES_ROOT=$HOME/.dotfiles
 
@@ -47,32 +54,68 @@ eval $(SHELL=zsh thefuck --alias)
 # Add kubernetes-cli completion
 source <(kubectl completion zsh)
 
-# Add python 3.7 to path
-export PATH="$HOME/Library/Python/3.7/bin:$HOME/Library/Python/2.7/bin:$PATH"
+# AWS
+export AWS_DEFAULT_PROFILE=dev
+alias sso_dev="sso_login dev"
+alias sso_stg="sso_login stg"
+alias dev_cred="update_aws_creds dev"
+alias stg_cred="update_aws_creds stg"
+
+sso_login() {
+  export AWS_PROFILE=$1
+  aws sso login --profile $1
+  update_aws_creds $1
+}
+
+update_aws_creds() {
+  cred_exports=$(aws sso get-role-credentials \
+    --account-id $(aws configure get sso_account_id --profile $1) \
+    --role-name $(aws configure get sso_role_name --profile $1) \
+    --access-token $(find ~/.aws/sso/cache -type f ! -name "botocore*.json" | xargs jq -r .accessToken) \
+    --region $(aws configure get region --profile $1) |\
+    jq -r '.roleCredentials |
+    {
+      "AWS_ACCESS_KEY_ID": .accessKeyId,
+      "AWS_SECRET_ACCESS_KEY": .secretAccessKey,
+      "AWS_SESSION_TOKEN": .sessionToken,
+      "AWS_CREDENTIALS_EXPIRATION": (.expiration / 1000 | todate)
+    } | keys[] as $k | "export \($k)=\(.[$k]) && tmux setenv \($k) \(.[$k])"')
+
+  for val in $cred_exports
+  do
+    eval $val
+  done
+}
 
 # Add java aliases
 # alias j12="export JAVA_HOME=`/usr/libexec/java_home -v 12`; java -version"
-alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
-alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
+# alias j11="export JAVA_HOME=`/usr/libexec/java_home -v 11`; java -version"
+# alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
 
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
-#OktaAWSCLI
-if [[ -e ~/.okta/bash_functions ]]; then
-  source ~/.okta/bash_functions
-fi
-
-# VPN connections
-alias vpn=$HOME/Developer/scripts/vpn_login_1password_cli.sh
-alias zg_start='sudo $HOME/Developer/scripts/ovpn_connect.sh https://techops.dotloop.com/pacfiles/zgaccess-hybrid.pac'
-alias zg_stop='sudo $HOME/Developer/scripts/ovpn_disconnect.sh'
-
 # enable fzf for searching
 [[ -a ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
-# mysql connections for dotloop envs
-alias mysql_dl_dev='mysql --defaults-group-suffix=dotloopDev'
-
 # added by travis gem
 [[ -a /Users/andrewwa/.travis/travis.sh ]] && source /Users/andrewwa/.travis/travis.sh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
