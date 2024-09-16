@@ -23,7 +23,7 @@ if ! zgen saved; then
 fi
 
 # Add git branch info to prompt
-export PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+# export PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 
 # Add git indicators to prompt
 export GIT_PS1_SHOWDIRTYSTATE=1

@@ -154,7 +154,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 
 " Formatting / Linting
-Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
@@ -301,46 +300,6 @@ set clipboard^=unnamed,unnamedplus
 let g:EasyClipAutoFormat = 1
 nmap <Leader>cf <plug>EasyClipToggleFormattedPaste
 
-" Ale configuration
-let g:ale_fixers = {
-      \ 'json': ['prettier'],
-      \ 'javascript': ['prettier', 'eslint'],
-      \ 'typescript': ['prettier', 'eslint'],
-      \ 'svelte': ['prettier', 'eslint'],
-      \ 'markdown': ['prettier'],
-      \ 'elixir': ['mix_format'],
-      \}
-
-let g:ale_fixer_aliases = {
-      \ 'typescript.tsx': 'typescript',
-      \ 'markdown.mdx': 'typescript'
-      \}
-
-let g:ale_linters = {
-      \ 'json': ['eslint'],
-      \ 'javascript': ['eslint'],
-      \ 'typescript': ['eslint'],
-      \ 'svelte': ['eslint'],
-      \ 'markdown': ['eslint'],
-      \ 'elixir': ['elixir-ls']
-      \}
-
-let g:ale_linter_aliases = {
-      \ 'svelte': ['css', 'javascript'],
-      \ 'typescript.tsx': 'typescript',
-      \ 'markdown.mdx': 'typescript'
-      \}
-
-let g:ale_pattern_options = {
-      \ 'node_modules': {'ale_fixers': []},
-      \ 'workbox': {'ale_fixers': []},
-      \ 'percy-agent': {'ale_fixers': []}
-      \}
-
-let g:ale_fix_on_save = 1
-let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_typescript_prettier_use_local_config = 1
-
 " Javascript / JSX
 let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
@@ -357,7 +316,7 @@ let g:vim_svelte_plugin_load_full_syntax = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocompletion with coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:WorkspaceFolders = ['~/Code/services-frontend/frontend', '~/Code/services-frontend/graphql']
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-eslint', 'coc-git', 'coc-jedi', 'coc-elixir']
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -434,7 +393,13 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Github Copilot
-nmap <leader>cs :Copilot panel<CR>
+let g:copilot_no_tab_map = v:true
+nmap <leader>cp :Copilot panel<CR>
+imap <silent> <C-j> <Plug>(copilot-next)
+imap <silent> <C-k> <Plug>(copilot-previous)
+imap <silent> <C-\> <Plug>(copilot-dismiss)
+imap <silent> <C-s> <Plug>(copilot-suggest)
+imap <silent><script><expr> <C-f> copilot#Accept("\<CR>")
 
 " LanguageServer config for Flow
 " Source: https://flow.org/en/docs/editors/vim/#toc-coc-nvim-neovim
@@ -521,7 +486,7 @@ if executable('rg')
   set shellpipe=>
 
   " Make ack.vim use rg
-  let g:ackprg='rg --vimgrep'
+  let g:ackprg='rg --hidden --vimgrep'
 elseif executable('ag')
   " Configure FZF to get its input from Ag (silver searcher)
   " By default, this excludes things located in .gitignore

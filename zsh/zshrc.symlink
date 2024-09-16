@@ -79,7 +79,7 @@ update_aws_creds() {
       "AWS_SECRET_ACCESS_KEY": .secretAccessKey,
       "AWS_SESSION_TOKEN": .sessionToken,
       "AWS_CREDENTIALS_EXPIRATION": (.expiration / 1000 | todate)
-    } | keys[] as $k | "export \($k)=\(.[$k]) && tmux setenv \($k) \(.[$k])"')
+    } | keys[] as $k | "export \($k)=\(.[$k])"')
 
   for val in $cred_exports
   do
